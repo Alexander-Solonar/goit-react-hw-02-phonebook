@@ -12,8 +12,10 @@ export class App extends Component {
   };
 
   addContacts = data => {
-    const nameUser = this.state.contacts.map(({ name }) => name);
-    if (nameUser.includes(data.name)) {
+    const nameUser = this.state.contacts.some(
+      ({ name }) => name.toLowerCase() === data.name.toLowerCase()
+    );
+    if (nameUser) {
       alert(`${data.name} is already in contacts.`);
       return;
     }
@@ -32,14 +34,16 @@ export class App extends Component {
     }));
   };
 
-  render() {
+  visibleContacts = () => {
     const { contacts, filter } = this.state;
-
     const normalizedFilter = filter.toLowerCase();
-    const visibleContacts = contacts.filter(contact =>
+
+    return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
+  };
 
+  render() {
     return (
       <div className={css.container}>
         <h1>Phonebook</h1>
@@ -47,7 +51,7 @@ export class App extends Component {
         <h2>Contacts</h2>
         <Filter value={this.state.filter} onfilterChange={this.filterChange} />
         <ContactList
-          data={visibleContacts}
+          data={this.visibleContacts()}
           onDeleteContact={this.deleteContact}
         />
       </div>
