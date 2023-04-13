@@ -3,6 +3,7 @@ import userContacts from '../data/contacts.json';
 import ContactForm from './contactForm';
 import ContactList from './contactList';
 import Filter from './filter';
+import css from './App.module.css';
 
 export class App extends Component {
   state = {
@@ -40,7 +41,7 @@ export class App extends Component {
     );
 
     return (
-      <div>
+      <div className={css.container}>
         <h1>Phonebook</h1>
         <ContactForm addContacts={this.addContacts} />
         <h2>Contacts</h2>
